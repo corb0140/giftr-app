@@ -10,7 +10,7 @@ import {
   Pressable,
 } from "react-native";
 import PeopleContext from "../PeopleContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImageModal from "../components/ImageModal";
 
 const IdeaScreen = ({ route }) => {
@@ -18,8 +18,8 @@ const IdeaScreen = ({ route }) => {
   const navigation = useNavigation();
   const { deletePersonIdea } = useContext(PeopleContext);
   const [modalVisible, setModalVisible] = useState(false);
-  //   const [storeImage, setStoreImage] = useState(null);
-  //   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [storeImage, setStoreImage] = useState(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   const storeImageHandler = (image, id) => {
     if (id && image) {
@@ -27,9 +27,22 @@ const IdeaScreen = ({ route }) => {
     }
   };
 
-  const deletePersonIdeaHandler = (id, ideaId) => {
+  const deletePersonIdeaHandler = (ideaId) => {
     deletePersonIdea({ id: id, ideaId: ideaId });
   };
+
+  useEffect(() => {
+    const getDimensions = async () => {
+      const storedWidth = await AsyncStorage.getItem("width");
+      const storedHeight = await AsyncStorage.getItem("height");
+
+      setDimensions({
+        width: JSON.parse(storedWidth) / 1.5,
+        height: JSON.parse(storedHeight) / 1.5,
+      });
+    };
+    getDimensions();
+  }, []);
 
   const { people } = useContext(PeopleContext);
 
@@ -62,10 +75,10 @@ const IdeaScreen = ({ route }) => {
                 >
                   <Image
                     source={{ uri: item.img }}
-                    // style={{
-                    //   width: dimensions.width,
-                    //   height: dimensions.height,
-                    // }}
+                    style={{
+                      width: dimensions.width,
+                      height: dimensions.height,
+                    }}
                   />
                 </Pressable>
 
@@ -82,6 +95,15 @@ const IdeaScreen = ({ route }) => {
           />
         )}
       </View>
+
+      <Pressable
+        style={styles.addIdeaButton}
+        onPress={() => {
+          navigation.navigate("AddIdea", { id: id, name: name });
+        }}
+      >
+        <Text>Add Idea</Text>
+      </Pressable>
 
       {modalVisible && (
         <ImageModal

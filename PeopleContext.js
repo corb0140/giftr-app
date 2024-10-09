@@ -37,15 +37,23 @@ export const PeopleProvider = ({ children }) => {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedPeople));
   };
 
-  const addPersonIdeas = async (id, idea) => {
+  const addPersonIdeas = async ({ id, idea }) => {
+    const imageSize = {
+      width: idea.imageWidth,
+      height: idea.imageHeight,
+    };
+
     const updatedPeople = people.find((person) => person.id === id);
 
     updatedPeople.ideas.push(idea);
+    console.log("clicked");
     setPeople([...people]);
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(people));
+    await AsyncStorage.setItem("width", JSON.stringify(imageSize.width));
+    await AsyncStorage.setItem("height", JSON.stringify(imageSize.height));
   };
 
-  const deletePersonIdea = async (id, ideaId) => {
+  const deletePersonIdea = async ({ id, ideaId }) => {
     const updatedPeople = people.find((person) => person.id === id);
     updatedPeople.ideas = updatedPeople.ideas.filter(
       (idea) => idea.id !== ideaId
