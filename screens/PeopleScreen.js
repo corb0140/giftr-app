@@ -20,12 +20,13 @@ import {
 
 export default function PeopleScreen() {
   const navigation = useNavigation();
+  const { deletePerson } = useContext(PeopleContext);
 
   const renderRightActions = (id) => (
     <Pressable
       style={styles.deleteButton}
       onPress={() => {
-        dispatch(deletePerson(id));
+        deletePerson(id);
       }}
     >
       <FontAwesome6 name="trash" size={30} color="white" />
@@ -64,7 +65,7 @@ export default function PeopleScreen() {
       <GestureHandlerRootView style={styles.container}>
         <SafeAreaView>
           <FlatList
-            data={people}
+            data={people.sort((a, b) => a.dob.localeCompare(b.dob))}
             keyExtractor={(item) => item.id}
             renderItem={renderItem}
           />
