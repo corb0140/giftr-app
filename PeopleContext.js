@@ -9,7 +9,6 @@ export const PeopleProvider = ({ children }) => {
 
   const STORAGE_KEY = "people";
 
-  // Load people from AsyncStorage
   useEffect(() => {
     const loadPeople = async () => {
       const savedPeople = await AsyncStorage.getItem(STORAGE_KEY);
