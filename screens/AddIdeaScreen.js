@@ -71,7 +71,7 @@ const AddIdeaScreen = ({ route }) => {
   }
 
   const addIdeaHandler = () => {
-    if (idea === "") {
+    if (idea === "" || photo === null) {
       setModalVisible(true);
     } else {
       addPersonIdeas({
