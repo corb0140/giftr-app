@@ -152,8 +152,8 @@ const styles = StyleSheet.create({
   },
   ideaListItem: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "top",
+    gap: 20,
     backgroundColor: "white",
     borderWidth: 1,
     borderRadius: 10,
