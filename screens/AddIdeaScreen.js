@@ -79,7 +79,7 @@ const AddIdeaScreen = ({ route }) => {
         idea: {
           id: uuid.v4(),
           idea: idea,
-          image: photo,
+          img: photo,
           imageWidth: imageWidth,
           imageHeight: imageHeight,
         },

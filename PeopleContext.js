@@ -43,6 +43,7 @@ export const PeopleProvider = ({ children }) => {
       height: idea.imageHeight,
     };
 
+    console.log(imageSize);
     const updatedPeople = people.find((person) => person.id === id);
 
     updatedPeople.ideas.push(idea);
