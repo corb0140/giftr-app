@@ -24,7 +24,7 @@ import ModalComponent from "../components/Modal";
 // Calculate image size
 const aspectRatio = 2 / 3;
 const screenWidth = Dimensions.get("window").width;
-const imageWidth = Math.round(screenWidth * 0.7);
+const imageWidth = Math.round(screenWidth * 0.6);
 const imageHeight = Math.round(screenWidth * aspectRatio);
 
 const AddIdeaScreen = ({ route }) => {
@@ -53,7 +53,7 @@ const AddIdeaScreen = ({ route }) => {
       const sizes = await cameraRef.current
         .getAvailablePictureSizesAsync()
         .then((sizes) => {
-          //   console.log(sizes);
+          console.log(sizes);
         });
 
       const photo = await cameraRef.current.takePictureAsync({

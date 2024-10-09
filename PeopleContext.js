@@ -46,7 +46,6 @@ export const PeopleProvider = ({ children }) => {
     const updatedPeople = people.find((person) => person.id === id);
 
     updatedPeople.ideas.push(idea);
-    console.log("clicked");
     setPeople([...people]);
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(people));
     await AsyncStorage.setItem("width", JSON.stringify(imageSize.width));

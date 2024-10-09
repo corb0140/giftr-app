@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import PeopleContext from "../PeopleContext";
 import { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImageModal from "../components/ImageModal";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
