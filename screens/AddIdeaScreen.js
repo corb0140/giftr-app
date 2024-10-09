@@ -24,7 +24,7 @@ import ModalComponent from "../components/Modal";
 // Calculate image size
 const aspectRatio = 2 / 3;
 const screenWidth = Dimensions.get("window").width;
-const imageWidth = Math.round(screenWidth * 0.6);
+const imageWidth = Math.round(screenWidth * 0.5);
 const imageHeight = Math.round(screenWidth * aspectRatio);
 
 const AddIdeaScreen = ({ route }) => {
