@@ -12,6 +12,7 @@ import {
 import PeopleContext from "../PeopleContext";
 import { useState, useEffect } from "react";
 import ImageModal from "../components/ImageModal";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 const IdeaScreen = ({ route }) => {
   const { id, name } = route.params;
@@ -65,8 +66,7 @@ const IdeaScreen = ({ route }) => {
             data={personIdeas?.ideas}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <View style={styles.ideaListMessageView}>
-                <Text style={styles.ideaListMessage}>{item.idea}</Text>
+              <View style={styles.ideaListItem}>
                 <Pressable
                   onPress={() => {
                     setModalVisible(!modalVisible);
@@ -82,14 +82,18 @@ const IdeaScreen = ({ route }) => {
                   />
                 </Pressable>
 
-                <Pressable
-                  style={styles.deleteButton}
-                  onPress={() => {
-                    deletePersonIdeaHandler(item.id);
-                  }}
-                >
-                  <Text style={styles.deleteButtonText}>Delete</Text>
-                </Pressable>
+                <View style={styles.ideaListNameAndButton}>
+                  <Text style={styles.ideaName}>{item.idea}</Text>
+
+                  <Pressable
+                    style={styles.deleteButton}
+                    onPress={() => {
+                      deletePersonIdeaHandler(item.id);
+                    }}
+                  >
+                    <Text style={styles.deleteButtonText}>Delete</Text>
+                  </Pressable>
+                </View>
               </View>
             )}
           />
@@ -102,7 +106,7 @@ const IdeaScreen = ({ route }) => {
           navigation.navigate("AddIdea", { id: id, name: name });
         }}
       >
-        <Text>Add Idea</Text>
+        <FontAwesome6 name="plus" size={24} color="white" />
       </Pressable>
 
       {modalVisible && (
@@ -133,9 +137,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   ideaListView: {
-    paddingTop: 40,
-    paddingLeft: 10,
-    paddingRight: 10,
+    marginVertical: 20,
+    marginHorizontal: 10,
   },
   ideaListMessageView: {
     borderWidth: 1,
@@ -146,11 +149,28 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "#101010",
   },
-  fab: {
-    position: "absolute",
-    zIndex: 1,
-    right: 10,
-    top: 0,
+  ideaListItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginVertical: 10,
+    elevation: 5,
+    shadowColor: "#343434",
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
+  },
+  ideaName: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    letterSpacing: 0.2,
+    color: "deepskyblue",
   },
   deleteButton: {
     marginVertical: 10,
@@ -162,5 +182,19 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     textTransform: "uppercase",
     fontSize: 16,
+    fontWeight: "bold",
+    color: "white",
+  },
+  addIdeaButton: {
+    position: "absolute",
+    bottom: 30,
+    right: "50%",
+    transform: "translateX(25px)",
+    borderRadius: 100,
+    backgroundColor: "deepskyblue",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 50,
+    width: 50,
   },
 });

@@ -67,8 +67,8 @@ export default function PeopleScreen() {
       <GestureHandlerRootView style={styles.container}>
         <SafeAreaView>
           {people.length === 0 ? (
-            <View>
-              <Text>No People Added</Text>
+            <View style={styles.textView}>
+              <Text style={styles.heading}>No People Added</Text>
             </View>
           ) : (
             <FlatList
@@ -77,14 +77,6 @@ export default function PeopleScreen() {
               renderItem={renderItem}
             />
           )}
-
-          <Pressable
-            style={styles.addPersonButton}
-            title="Add Person"
-            onPress={() => navigation.navigate("AddPerson")}
-          >
-            <FontAwesome6 name="plus" size={24} color="white" />
-          </Pressable>
 
           {people.length === 0 && (
             <ModalComponent
@@ -96,6 +88,14 @@ export default function PeopleScreen() {
             />
           )}
         </SafeAreaView>
+
+        <Pressable
+          style={styles.addPersonButton}
+          title="Add Person"
+          onPress={() => navigation.navigate("AddPerson")}
+        >
+          <FontAwesome6 name="plus" size={24} color="white" />
+        </Pressable>
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );
@@ -105,6 +105,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  textView: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 20,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: "bold",
   },
   itemContainer: {
     flexDirection: "row",
@@ -150,7 +159,7 @@ const styles = StyleSheet.create({
     bottom: 30,
     right: "50%",
     transform: "translateX(25px)",
-    borderRadius: 100,
+    borderRadius: 30,
     backgroundColor: "deepskyblue",
     alignItems: "center",
     justifyContent: "center",
