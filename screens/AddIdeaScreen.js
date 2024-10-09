@@ -11,14 +11,15 @@ import {
   Image,
   Pressable,
   Dimensions,
+  Button,
 } from "react-native";
 
 import PeopleContext from "../PeopleContext";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { CameraView, Camera } from "expo-camera";
+import { CameraView, useCameraPermissions } from "expo-camera";
 import uuid from "react-native-uuid";
 
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import ModalComponent from "../components/Modal";
 
 // Calculate image size
@@ -33,20 +34,13 @@ const AddIdeaScreen = ({ route }) => {
   const { addPersonIdeas } = useContext(PeopleContext);
 
   //camera
-  const [hasPermission, setHasPermission] = useState(null);
+  const [permission, requestPermission] = useCameraPermissions();
   const [photo, setPhoto] = useState(null);
   const cameraRef = useRef(null);
 
   //useStates / useRefs
   const [idea, setIdea] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  }, []);
 
   const takePicture = async () => {
     if (cameraRef.current) {
@@ -63,11 +57,17 @@ const AddIdeaScreen = ({ route }) => {
     }
   };
 
-  if (hasPermission === null) {
+  if (!permission) {
     return <View />;
   }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+
+  if (!permission.granted) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.message}>Need camera permission</Text>
+        <Button onPress={requestPermission} title="Grant Permission" />
+      </View>
+    );
   }
 
   const addIdeaHandler = () => {
