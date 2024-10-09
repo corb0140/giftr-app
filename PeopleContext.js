@@ -23,6 +23,7 @@ export const PeopleProvider = ({ children }) => {
       id: randomUUID(),
       name,
       dob,
+      ideas: [],
     };
     const updatedPeople = [...people, newPerson];
     console.log(updatedPeople);
@@ -36,8 +37,33 @@ export const PeopleProvider = ({ children }) => {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedPeople));
   };
 
+  const addPersonIdeas = async (id, idea) => {
+    const updatedPeople = people.find((person) => person.id === id);
+
+    updatedPeople.ideas.push(idea);
+    setPeople([...people]);
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(people));
+  };
+
+  const deletePersonIdea = async (id, ideaId) => {
+    const updatedPeople = people.find((person) => person.id === id);
+    updatedPeople.ideas = updatedPeople.ideas.filter(
+      (idea) => idea.id !== ideaId
+    );
+    setPeople([...people]);
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(people));
+  };
+
   return (
-    <PeopleContext.Provider value={{ people, addPerson, deletePerson }}>
+    <PeopleContext.Provider
+      value={{
+        people,
+        addPerson,
+        deletePerson,
+        addPersonIdeas,
+        deletePersonIdea,
+      }}
+    >
       {children}
     </PeopleContext.Provider>
   );

@@ -17,10 +17,12 @@ import {
   Swipeable,
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
+import { useState } from "react";
 
 export default function PeopleScreen() {
   const navigation = useNavigation();
   const { deletePerson } = useContext(PeopleContext);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const renderRightActions = (id) => (
     <Pressable
@@ -64,18 +66,34 @@ export default function PeopleScreen() {
     <SafeAreaProvider>
       <GestureHandlerRootView style={styles.container}>
         <SafeAreaView>
-          <FlatList
-            data={people.sort((a, b) => a.dob.localeCompare(b.dob))}
-            keyExtractor={(item) => item.id}
-            renderItem={renderItem}
-          />
-          <Pressable
-            style={styles.addPersonButton}
-            title="Add Person"
-            onPress={() => navigation.navigate("AddPerson")}
-          >
-            <Text style={{ color: "white" }}>Add Person</Text>
-          </Pressable>
+          {people.length === 0 ? (
+            <View>
+              <Text>No People Added</Text>
+
+              <Pressable
+                style={styles.addPersonButton}
+                title="Add Person"
+                onPress={() => navigation.navigate("AddPerson")}
+              >
+                <Text style={{ color: "white" }}>Add Person</Text>
+              </Pressable>
+            </View>
+          ) : (
+            <>
+              <FlatList
+                data={people.sort((a, b) => a.dob.localeCompare(b.dob))}
+                keyExtractor={(item) => item.id}
+                renderItem={renderItem}
+              />
+              <Pressable
+                style={styles.addPersonButton}
+                title="Add Person"
+                onPress={() => navigation.navigate("AddPerson")}
+              >
+                <Text style={{ color: "white" }}>Add Person</Text>
+              </Pressable>
+            </>
+          )}
 
           {people.length === 0 && (
             <ModalComponent
